@@ -39,3 +39,11 @@ img {
 .player {
     margin-top: 15px; /*Moved the player a bit down*/
 }
+
+.form-element {
+    margin-bottom: 10px; /*I made the form input and added a margin so that the input windows would have some spacing*/
+}
+
+input {
+    padding: 5px; /*I added some padding to the input elements to make them look better*/
+}

@@ -1,9 +1,31 @@
+<?php
+$host = 'localhost';
+$dbname = 'your_database_name';
+$username = 'your_database_username';
+$password = 'your_database_password';
+
+// Create a MySQL connection
+$conn = new mysqli($host, $username, $password, $dbname);
+
+// Check if the connection was successful
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch data from the 'users' table
+$query = "SELECT * FROM users";
+$result = $conn->query($query);
+
+// Close the connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naloga 3</title>
+    <title>Naloga 4</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,6 +50,39 @@
 
     <!-- MAIN -->
     <main>
+        <form action="user_data.php" class="form">
+            <div class="form-element">
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-element">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-element">
+                <label for="phone">Phone:</label>
+                <input type="tel" name="phone" id="phone" placeholder="Enter your phone number" required>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+
+        <?php
+        if ($result->num_rows > 0) {
+        echo "<table>";
+        echo "<tr><th>Name</th><th>Email</th><th>Phone</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["name"] . "</td>";
+            echo "<td>" . $row["email"] . "</td>";
+            echo "<td>" . $row["phone"] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+         } else {
+        echo "No data found!";
+        }
+        ?>
+
         <p>
             Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Fusce vel nunc ut nulla venenatis condimentum. Sed nec velit eu velit ullamcorper tincidunt vel vel massa. Aenean interdum justo eu massa malesuada, at sagittis risus facilisis. Phasellus faucibus enim in bibendum tristique.
         </p>
@@ -58,8 +113,5 @@
         <p>this is a footer</p>
     </footer>
     
-    
-
-
 </body>
 </html>
